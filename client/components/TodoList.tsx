@@ -21,37 +21,43 @@ function TodoList() {
     }
   }
 
+  const handleKeyPress = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+    taskId: number,
+  ) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      handleTaskClick(taskId)
+    }
+  }
+
   return (
     <ul className="todo-list">
       {tasks.map((task) => (
         <li key={task.id} className={task.is_complete ? 'completed' : ''}>
           <div
+            onClick={() => handleTaskClick(task.id)}
+            onKeyPress={(e) => handleKeyPress(e, task.id)}
+            role="button"
+            tabIndex={0} // Makes the div focusable
+            aria-expanded={
+              task.id === currentTaskId && task.id !== minimizedTaskId
+            }
+            aria-label={`Task: ${task.name}`}
             style={{
-              width: '100%',
+              cursor: 'pointer',
               display: 'block',
+              padding: '10px 0',
             }}
           >
-            <label
-              onClick={() => handleTaskClick(task.id)}
-              style={{
-                cursor: 'pointer',
-                display: 'block',
-                padding: '10px 0',
-              }}
-              aria-expanded={
-                task.id === currentTaskId && task.id !== minimizedTaskId
-              }
-            >
-              {task.name}
-            </label>
-            {task.id === currentTaskId && task.id !== minimizedTaskId && (
-              <TaskDetail
-                task={task}
-                onUpdateTask={handleUpdateTask}
-                onDeleteTask={handleDeleteTask}
-              />
-            )}
+            {task.name}
           </div>
+          {task.id === currentTaskId && task.id !== minimizedTaskId && (
+            <TaskDetail
+              task={task}
+              onUpdateTask={handleUpdateTask}
+              onDeleteTask={handleDeleteTask}
+            />
+          )}
         </li>
       ))}
     </ul>

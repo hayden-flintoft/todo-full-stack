@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import AddTodo from './AddTodo'
 import { LayoutProps } from '../types'
 export default function Layout({
@@ -9,7 +9,11 @@ export default function Layout({
   return (
     <>
       <header className="header">
-        <h1>todos</h1>
+        <h1>
+          <Link to="/" className="header-link">
+            Get it done
+          </Link>
+        </h1>
         <AddTodo onAddTask={handleAddTask} />
       </header>
       <section id="main-container">

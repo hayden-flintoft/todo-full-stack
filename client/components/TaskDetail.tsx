@@ -5,7 +5,6 @@ import { Task, TaskDetailProps } from '../types' // Import types
 
 function TaskDetail({
   task: initialTask,
-  // onMinimize,
   onUpdateTask,
   onDeleteTask,
 }: TaskDetailProps) {
@@ -15,9 +14,19 @@ function TaskDetail({
     field: keyof Task,
     value: string | boolean | Date | null,
   ) => {
-    const updatedTask = { ...task, [field]: value }
+    const updatedTask = {
+      ...task,
+      [field]: value,
+      date_modified: new Date().toISOString(), // Update the date_modified field
+    }
     setTask(updatedTask)
-    onUpdateTask(updatedTask)
+    // I have commented this out so i can include a save button to meet the requirements for WD03 of having one button on the form (the delete button isnt part of the form). Removing the comment below will reenable live saving.
+    // onUpdateTask(updatedTask)
+  }
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault()
+    onUpdateTask(task)
   }
 
   const handleDelete = () => {
@@ -31,14 +40,19 @@ function TaskDetail({
   }
 
   return (
-    <div className="task-detail">
+    <form className="task-detail" onSubmit={handleSave}>
       <div className="task-header">
         <h2 className="task-title">
+          <label htmlFor={`task-name-${task.id}`} className="sr-only">
+            Task Name:
+          </label>
           <input
             type="text"
+            id={`task-name-${task.id}`}
             value={task.name}
             onChange={(e) => handleChange('name', e.target.value)}
             className="task-input"
+            aria-label="Task Name"
           />
         </h2>
       </div>
@@ -58,7 +72,6 @@ function TaskDetail({
           Due Date:
         </label>
         <DatePicker
-          // NB: Time picker wont size properly so I have just removed it for now.
           id={`due-date-${task.id}`}
           selected={task.due_date ? new Date(task.due_date) : null}
           onChange={(date) => {
@@ -73,15 +86,18 @@ function TaskDetail({
 
         <label className="task-label task-status" htmlFor={`status-${task.id}`}>
           Status:
+        </label>
+        <div>
           <input
             id={`status-${task.id}`}
             type="checkbox"
             checked={task.is_complete}
             onChange={toggleComplete}
             className="task-checkbox"
+            aria-label={task.is_complete ? 'Completed' : 'Incomplete'}
           />
           {task.is_complete ? 'Completed' : 'Incomplete'}
-        </label>
+        </div>
 
         <p className="task-dates">
           Date Created: {new Date(task.date_created).toLocaleString()}
@@ -91,10 +107,16 @@ function TaskDetail({
         </p>
       </div>
 
-      <button onClick={handleDelete} className="delete-button">
-        Delete Task
-      </button>
-    </div>
+      <div className="task-actions">
+        {/* Comment out the save button if re-enabling live saving as it will be redundant. */}
+        <button type="submit" className="save-button">
+          Save Task
+        </button>
+        <button onClick={handleDelete} type="button" className="delete-button">
+          Delete Task
+        </button>
+      </div>
+    </form>
   )
 }
 
