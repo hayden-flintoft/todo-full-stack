@@ -11,7 +11,7 @@ export default function Layout({
       <header className="header">
         <h1>
           <Link to="/" className="header-link">
-            Get it done
+            Todo&apos;s
           </Link>
         </h1>
         <AddTodo onAddTask={handleAddTask} />
