@@ -1,10 +1,35 @@
-# TODO App
+# Full Stack TODO App
 
-For this challenge, we will build a todo app (which is a common way to practice a new technology), using the full stack! From the database to the server, the API client, React and React Query, this app will ask you to use everything you've learned.
+This project is a full-stack task management application built using modern web development technologies. It allows users to create, update, and delete tasks, and manage task details like due dates and completion status. The app is powered by an Express API, a SQLite database, and a React front end with React Query for managing server state.
+
+## Features
+
+- Create tasks with a name, description, and due date
+- Update task details and mark tasks as complete or incomplete
+- Delete tasks
+- View a list of tasks with status indicators
+- Persistent task management across refreshes
+
+## Technologies Used
+
+- Frontend: React, React Query, TypeScript, React Router DOM
+- Backend: Node.js, Express
+- Database: SQLite3 with Knex.js for migrations and seeds
+- Styling: Custom CSS with SASS support
+- Testing: Vitest, Testing Library
+- API Handling: Fetch API, Superagent for server-side requests
 
 ## Setup
 
-### 0. Cloning and installation
+### Prerequisites
+
+Before starting, ensure that you have the following installed on your machine:
+
+- Node.js (v16 or higher)
+- NPM (v7 or higher)
+- SQLite3
+
+### 1. Cloning and installation
 
 - [ ] Clone this repo, navigate to it, install packages, and start the server with `npm run dev`
   <details style="padding-left: 2em">
@@ -21,66 +46,47 @@ For this challenge, we will build a todo app (which is a common way to practice 
 
   </details>
 
-- [ ] See the designs [here](http://localhost:5173/designs/index.html)
+### 2. Install dependencies:
 
-<details>
-  <summary>More about using <code>npm</code> vs <code>npx</code></summary>
+Run the following command to install the required dependencies:
 
-- When running knex, run `npm run knex <command>`, e.g. `npm run knex migrate:latest` rather than using `npx`
-</details>
+```bash
+npm install
+```
 
----
+### 3. Setup the database:
 
-## Requirements
+Initialize the SQLite database by running the following commands to run migrations and seed the database:
 
-Here's a list of steps in case they are useful. You can build in any order you like though ;)
+```bash
+npm run knex migrate:latest
+npm run knex seed:run
+```
 
-## Back end (Server-side)
+### 4. Start the development environment:
 
-### 1. Building the database
+To start both the client and the server in development mode, use:
 
-- [ ] Design a database to store a list of tasks, e.g. task details, priority, completed yes/no
-- [ ] Build the migrations and seed data
+```bash
+npm run dev
+```
 
-### 2. Building the API
+### 5. Open the app:
 
-- [ ] Build an API (back end route) to get the information from your database (list, add, update and delete)
-- [ ] Test your API with Thunder Client
+The app should now be running on `http://localhost:5173` for the client and `http://localhost:3000` for the server API.
 
-## Front end (Client-side)
+## Usage
 
-### 3. Setting the stage
+### Adding Tasks
 
-- [ ] Build a React component with static html
-- [ ] Follow the [design](./public/designs/index.html) template for classNames and html element layout
+- In the app's main page, enter the task name in the input field and hit 'Enter'. The task will be added to the list below.
 
-### 4. Building the API client
+### Updating Tasks
 
-- [ ] Build API client in the front end
+- Click on a task name to open its detail view.
+- You can update the task name, description, due date, and status (complete/incomplete).
+- Click "Save Task" to update the task.
 
-### 5. Querying Data 
+### Deleting Tasks
 
-- [ ] Write a query with the `useQuery` hook to fetch the task data from the API
-- [ ] Mutate data with the `useMutation` hook to create, update, and delete task data via the API 
-
----
-
-## Stretch
-
-<details>
-  <summary>More about stretch challenges</summary>
-
-- Forms can be tough to build accessibly. First ensure all parts of your form can be reached and used with keyboard-only navigation. Then test your form page with the WAVE browser extension, and fix any accessibility issues it detects
-
-</details>
-
----
-
-## Submitting this Challenge for Marking
-
-This challenge can be used for the following trello assessments:
- 
-- **WD03 - Forms**
-- **WD04 - Fullstack** (**Note** - you will need to deploy this challenge to dokku to pass this trello assessment.)
-
-[Provide feedback on this repo](https://docs.google.com/forms/d/e/1FAIpQLSfw4FGdWkLwMLlUaNQ8FtP2CTJdGDUv6Xoxrh19zIrJSkvT4Q/viewform?usp=pp_url&entry.1958421517=todo-full-stack)
+- In the task detail view, you can click "Delete Task" to remove the task from the list.
